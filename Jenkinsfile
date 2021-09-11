@@ -21,14 +21,14 @@ pipeline {
             steps {
                 dir("${dir}") {
                     script {
-                        //openshift.withCluster() {
-                            //openshift.withProject("${proj}") {
+                        openshift.withCluster() {
+                            openshift.withProject("${proj}") {
 
                                 //sh "cat Dockerfile | oc new-build -D - --name ${bc}"
                                 //sh "oc apply -f ${bc}"
 
-                            //}
-                        //}
+                            }
+                        }
                     }
                 }
             }
