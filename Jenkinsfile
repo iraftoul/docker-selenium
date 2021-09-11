@@ -27,8 +27,8 @@ pipeline {
                                 //sh "cat Dockerfile | oc new-build -D - --name ${bc}"
                                 //sh "oc apply -f ${bc}"
 
-                            }
-                        }
+                            //}
+                        //}
                     }
                 }
             }
@@ -43,7 +43,7 @@ pipeline {
 
                                 //sh "oc apply -f ${dc}"
                                 sh "oc new-app selenium/standalone-chrome:4.0.0-rc-2-prerelease-20210908  --name ${app}"
-                                //sh "oc expose svc/${app}"
+                                sh "oc expose svc/${app}"
 
                             }
                         }
