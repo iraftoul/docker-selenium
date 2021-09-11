@@ -42,6 +42,7 @@ pipeline {
                             openshift.withProject("${proj}") {
 
                                 //sh "oc apply -f ${dc}"
+                                sh "oc project"
                                 sh "oc new-app selenium/standalone-chrome:4.0.0-rc-2-prerelease-20210908  --name ${app}"
                                 sh "oc expose svc/${app}"
 
