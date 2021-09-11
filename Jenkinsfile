@@ -12,7 +12,7 @@ pipeline {
         stage('Checkout git sources') {
             steps {
                 dir("${dir}") {
-                    git 'https://iraftoul@bitbucket.org/iraftoul/selenium-test.git'
+                    git 'https://github.com/iraftoul/docker-selenium.git'
                 }
             }
         }
