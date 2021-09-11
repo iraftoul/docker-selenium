@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        def proj = "jenkins-test"
+        def proj = "deploy-test"
         def dir = "StandaloneChrome"
         def app = "selenium-standalone"
         //def bc = "selenium-build"
@@ -21,8 +21,8 @@ pipeline {
             steps {
                 dir("${dir}") {
                     script {
-                        openshift.withCluster() {
-                            openshift.withProject("${proj}") {
+                        //openshift.withCluster() {
+                            //openshift.withProject("${proj}") {
 
                                 //sh "cat Dockerfile | oc new-build -D - --name ${bc}"
                                 //sh "oc apply -f ${bc}"
