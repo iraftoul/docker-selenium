@@ -17,23 +17,6 @@ pipeline {
             }
         }
 
-        stage('Build docker image') {
-            steps {
-                dir("${dir}") {
-                    script {
-                        openshift.withCluster() {
-                            openshift.withProject("${proj}") {
-
-                                //sh "cat Dockerfile | oc new-build -D - --name ${bc}"
-                                //sh "oc apply -f ${bc}"
-
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         stage('Deploying image') {
             steps {
                 dir("${dir}") {
@@ -43,8 +26,20 @@ pipeline {
 
                                 //sh "oc apply -f ${dc}"
                                 sh "oc project ${proj}"
-                                sh "oc new-app selenium/standalone-chrome:4.0.0-rc-2-prerelease-20210908  --name ${app}"
-                                sh "oc expose svc/${app}"
+
+                                def dcSelector = openshift.selector("dc","${app}")
+                                def dcExists = dcSelector.exists()
+                                if (!dcExists) {
+                                    sh "oc new-app selenium/standalone-chrome:4.0.0-rc-2-prerelease-20210908  --name ${app}"
+                                } else {
+                                    sh "oc rollout latest dc/${app}"
+                                }
+
+                                def routeSelector = openshift.selector("route","${app}")
+                                def routeExists = routeSelector.exists()
+                                if (!routeExists) {
+                                    sh "oc expose svc/${app}"
+                                }
 
                             }
                         }
